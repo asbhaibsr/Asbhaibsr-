@@ -122,6 +122,81 @@
             backdrop-filter: blur(10px);
         }
 
+        /* Desktop Corner Button */
+        .desktop-corner-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .desktop-corner-button:hover {
+            transform: scale(1.1);
+        }
+
+        /* List Mode Toggle */
+        .list-mode-toggle {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .list-mode-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Page Navigation */
+        .page-navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .page-nav-btn {
+            width: 50px;
+            height: 50px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .page-nav-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
         /* Custom Cursor */
         .custom-cursor {
             width: 20px;
@@ -247,6 +322,22 @@
                 padding: 15px;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             }
+            
+            /* Hide desktop corner button on mobile */
+            .desktop-corner-button {
+                display: none !important;
+            }
+            
+            /* Adjust page navigation for mobile */
+            .page-navigation {
+                bottom: 100px;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .desktop-corner-button {
+                display: flex;
+            }
         }
         
         /*
@@ -295,6 +386,36 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
             margin-top: 40px;
+        }
+
+        /* List Mode Styles */
+        .list-mode .button-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .list-mode .btn-card {
+            display: flex;
+            align-items: center;
+            text-align: left;
+            padding: 20px;
+        }
+
+        .list-mode .btn-icon {
+            margin-bottom: 0;
+            margin-right: 20px;
+            font-size: 2rem;
+        }
+
+        .list-mode .btn-title {
+            margin-bottom: 5px;
+        }
+
+        .list-mode .btn-desc {
+            margin-bottom: 0;
+        }
+
+        .list-mode .btn-link, .list-mode .bot-info-button {
+            margin-left: auto;
         }
 
         .btn-card {
@@ -988,6 +1109,26 @@
         <i class="fas fa-moon"></i>
     </div>
 
+    <!-- Desktop Corner Button -->
+    <div class="desktop-corner-button" id="desktopCornerBtn">
+        <i class="fas fa-crown"></i>
+    </div>
+
+    <!-- List Mode Toggle -->
+    <div class="list-mode-toggle" id="listModeToggle">
+        <i class="fas fa-list"></i>
+    </div>
+
+    <!-- Page Navigation -->
+    <div class="page-navigation">
+        <div class="page-nav-btn" id="prevPageBtn">
+            <i class="fas fa-arrow-left"></i>
+        </div>
+        <div class="page-nav-btn" id="nextPageBtn">
+            <i class="fas fa-arrow-right"></i>
+        </div>
+    </div>
+
     <div class="custom-cursor"></div>
     <div class="cursor-dot"></div>
 
@@ -1540,6 +1681,8 @@
             }
         };
 
+        // Section order for navigation
+        const sectionOrder = ['home', 'about', 'bots', 'groups', 'contact', 'bot-info'];
 
         // --- Functions from Original Script ---
 
@@ -1596,6 +1739,9 @@
             initializeStatsCounter();
             initializeNavigation();
             initializeMobileMenu();
+            initializeDesktopCornerButton();
+            initializeListModeToggle();
+            initializePageNavigation();
             
             // Show confetti
             showConfetti();
@@ -1618,6 +1764,104 @@
                     themeIcon.classList.add('fa-sun');
                 }
             });
+        }
+
+        // Desktop Corner Button
+        function initializeDesktopCornerButton() {
+            const desktopCornerBtn = document.getElementById('desktopCornerBtn');
+            
+            desktopCornerBtn.addEventListener('click', function() {
+                // Show loading screen
+                showLoadingScreen();
+                
+                // After loading, show king animation
+                setTimeout(() => {
+                    hideLoadingScreen();
+                    document.getElementById('kingAnimation').style.display = 'flex';
+                    showConfetti();
+                    
+                    // Hide animation after 4 seconds
+                    setTimeout(() => {
+                        document.getElementById('kingAnimation').style.display = 'none';
+                    }, 4000);
+                }, 1500);
+            });
+        }
+
+        // List Mode Toggle
+        function initializeListModeToggle() {
+            const listModeToggle = document.getElementById('listModeToggle');
+            const listModeIcon = listModeToggle.querySelector('i');
+            
+            listModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('list-mode');
+                
+                if (document.body.classList.contains('list-mode')) {
+                    listModeIcon.classList.remove('fa-list');
+                    listModeIcon.classList.add('fa-th-large');
+                } else {
+                    listModeIcon.classList.remove('fa-th-large');
+                    listModeIcon.classList.add('fa-list');
+                }
+            });
+        }
+
+        // Page Navigation
+        function initializePageNavigation() {
+            const prevPageBtn = document.getElementById('prevPageBtn');
+            const nextPageBtn = document.getElementById('nextPageBtn');
+            
+            prevPageBtn.addEventListener('click', navigateToPreviousSection);
+            nextPageBtn.addEventListener('click', navigateToNextSection);
+        }
+
+        function navigateToPreviousSection() {
+            const currentSection = document.querySelector('section.active');
+            const currentSectionId = currentSection.id;
+            const currentIndex = sectionOrder.indexOf(currentSectionId);
+            
+            if (currentIndex > 0) {
+                navigateToSection(sectionOrder[currentIndex - 1]);
+            }
+        }
+
+        function navigateToNextSection() {
+            const currentSection = document.querySelector('section.active');
+            const currentSectionId = currentSection.id;
+            const currentIndex = sectionOrder.indexOf(currentSectionId);
+            
+            if (currentIndex < sectionOrder.length - 1) {
+                navigateToSection(sectionOrder[currentIndex + 1]);
+            }
+        }
+
+        // Loading Screen Functions
+        function showLoadingScreen() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const progressBar = document.querySelector('.progress');
+            const percentage = document.querySelector('.loader-percentage');
+            
+            loadingScreen.style.display = 'flex';
+            loadingScreen.style.opacity = '1';
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 20;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                }
+                progressBar.style.width = progress + '%';
+                percentage.textContent = Math.round(progress) + '%';
+            }, 100);
+        }
+
+        function hideLoadingScreen() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 500);
         }
 
         // Custom Cursor (Only the necessary part for initialization)
@@ -1730,16 +1974,23 @@
                     const targetId = this.getAttribute('data-target');
                     if (targetId) {
                         e.preventDefault();
-                        navigateToSection(targetId);
                         
-                        // Close mobile menu if open
-                        const nav = document.getElementById('mainNav');
-                        const menuToggle = document.getElementById('menuToggle').querySelector('i');
-                        if (nav.classList.contains('open')) {
-                            nav.classList.remove('open');
-                            menuToggle.classList.remove('fa-times');
-                            menuToggle.classList.add('fa-bars');
-                        }
+                        // Show loading screen for navigation
+                        showLoadingScreen();
+                        
+                        setTimeout(() => {
+                            navigateToSection(targetId);
+                            hideLoadingScreen();
+                            
+                            // Close mobile menu if open
+                            const nav = document.getElementById('mainNav');
+                            const menuToggle = document.getElementById('menuToggle').querySelector('i');
+                            if (nav.classList.contains('open')) {
+                                nav.classList.remove('open');
+                                menuToggle.classList.remove('fa-times');
+                                menuToggle.classList.add('fa-bars');
+                            }
+                        }, 1000);
                     }
                 });
             });
@@ -1786,16 +2037,23 @@
 
         // King Animation for About Me Button
         document.getElementById('aboutMeBtn').addEventListener('click', function() {
-            // Show king animation
-            document.getElementById('kingAnimation').style.display = 'flex';
-            showConfetti();
+            // Show loading screen
+            showLoadingScreen();
             
-            // Hide animation after 4 seconds and show about section
             setTimeout(() => {
-                document.getElementById('kingAnimation').style.display = 'none';
+                hideLoadingScreen();
                 
-                navigateToSection('about');
-            }, 4000);
+                // Show king animation
+                document.getElementById('kingAnimation').style.display = 'flex';
+                showConfetti();
+                
+                // Hide animation after 4 seconds and show about section
+                setTimeout(() => {
+                    document.getElementById('kingAnimation').style.display = 'none';
+                    
+                    navigateToSection('about');
+                }, 4000);
+            }, 1500);
         });
 
         // Confetti Function
@@ -1869,9 +2127,16 @@
         // Dynamic Bot Info Page Handler
         function handleBotInfoClick(e) {
             e.preventDefault();
-            const botId = this.getAttribute('data-bot-id');
-            renderBotInfo(botId);
-            navigateToSection('bot-info');
+            
+            // Show loading screen
+            showLoadingScreen();
+            
+            setTimeout(() => {
+                const botId = this.getAttribute('data-bot-id');
+                renderBotInfo(botId);
+                navigateToSection('bot-info');
+                hideLoadingScreen();
+            }, 1000);
         }
         
         // Bot Info Renderer
@@ -1954,4 +2219,4 @@
         }, 1000);
     </script>
 </body>
-</html>
+    </html>
