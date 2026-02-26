@@ -3,2220 +3,1138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>As Bhai Bsr - Professional Bot Services</title>
+    <title>As Bhai Bsr ✦ Premium Bot Services</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /*
-        **************************************************
-        BASE STYLES & VARIABLES
-        **************************************************
-        */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Righteous&display=swap');
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        :root {
-            --primary: #4a00e0;
-            --secondary: #8e2de2;
-            --accent: #ff6b6b;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --success: #28a745;
-            --warning: #ffc107;
-            --info: #17a2b8;
-            --youtube: #ff0000;
-            --bg-primary: #1a1a2e;
-            --bg-secondary: #16213e;
-            --text-primary: #f8f9fa;
-            --text-secondary: #ccc;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --bot-card-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            --nav-bg: rgba(26, 26, 46, 0.7); /* Semi-transparent for blur effect */
-        }
-
-        [data-theme="light"] {
-            --bg-primary: #f8f9fa;
-            --bg-secondary: #e9ecef;
-            --text-primary: #212529;
-            --text-secondary: #6c757d;
-            --card-bg: rgba(0, 0, 0, 0.03);
-            --dark: #f8f9fa;
-            --light: #212529;
-            --bot-card-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            --nav-bg: rgba(248, 249, 250, 0.9);
         }
 
         body {
-            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #1a0b2e 0%, #0f0a1f 90%);
+            color: #fff;
             min-height: 100vh;
+            padding: 1rem;
+            position: relative;
             overflow-x: hidden;
-            cursor: none;
-            transition: all 0.5s ease;
         }
 
-        /*
-        **************************************************
-        UTILITY & OVERLAYS
-        **************************************************
-        */
-
-        /* Loading Screen */
-        .loading-screen {
+        /* Animated Background */
+        .gradient-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10001;
-            transition: opacity 0.5s ease;
+            z-index: -2;
+            background: radial-gradient(circle at 30% 50%, #3b1e4b 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, #1d3b5c 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, #4a2b3a 0%, transparent 50%);
+            opacity: 0.6;
         }
 
-        .loader {
-            text-align: center;
-            width: 80%;
-            max-width: 400px;
-        }
-
-        .progress-bar {
+        .floating-shapes {
+            position: fixed;
             width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
+            height: 100%;
+            z-index: -1;
             overflow: hidden;
-            margin-bottom: 10px;
         }
 
-        .progress {
-            height: 100%;
-            background: linear-gradient(to right, var(--accent), var(--primary));
-            width: 0%;
-            transition: width 0.3s ease;
-            border-radius: 3px;
-        }
-
-        /* Theme Toggle */
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background: var(--card-bg);
+        .shape {
+            position: absolute;
+            background: rgba(255, 215, 0, 0.03);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 1000;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
+            animation: float 20s infinite;
         }
 
-        /* Desktop Corner Button */
-        .desktop-corner-button {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--accent), var(--primary));
-            border-radius: 50%;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
         }
 
-        .desktop-corner-button:hover {
-            transform: scale(1.1);
+        /* Main Container */
+        .premium-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
         }
 
-        /* List Mode Toggle */
-        .list-mode-toggle {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            width: 60px;
-            height: 60px;
-            background: var(--card-bg);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .list-mode-toggle:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        /* Page Navigation */
-        .page-navigation {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 15px;
-            z-index: 1000;
-        }
-
-        .page-nav-btn {
-            width: 50px;
-            height: 50px;
-            background: var(--card-bg);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .page-nav-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-5px);
-        }
-
-        /* Custom Cursor */
-        .custom-cursor {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--accent);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: all 0.1s ease;
-            mix-blend-mode: difference;
-        }
-
-        .cursor-dot {
-            width: 4px;
-            height: 4px;
-            background: var(--accent);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: all 0.05s ease;
-        }
-
-        /* Language Selection Screen */
-        .language-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            animation: fadeIn 1s ease;
-        }
-
-        /*
-        **************************************************
-        HEADER & NAVIGATION
-        **************************************************
-        */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 900;
+        /* Glassmorphism Header */
+        .glass-header {
+            background: rgba(20, 15, 40, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 50px;
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
-            background: var(--nav-bg);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+            gap: 1rem;
+            box-shadow: 0 25px 40px -15px rgba(0, 0, 0, 0.5);
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px; /* Added padding for responsiveness */
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 20px;
-        }
-
-        nav a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 8px 15px;
-            border-radius: 5px;
-            position: relative;
-        }
-
-        nav a:hover, nav a.active {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--accent);
-        }
-
-        /* Mobile Menu */
-        .menu-toggle {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 1001;
-            padding: 10px;
-        }
-        
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
-            }
-            nav {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 70%;
-                height: 100%;
-                background: var(--bg-primary);
-                padding-top: 80px;
-                transition: right 0.3s ease;
-                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
-                z-index: 950;
-            }
-            nav.open {
-                right: 0;
-            }
-            nav ul {
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 20px;
-            }
-            nav a {
-                display: block;
-                width: 100%;
-                padding: 15px;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            }
-            
-            /* Hide desktop corner button on mobile */
-            .desktop-corner-button {
-                display: none !important;
-            }
-            
-            /* Adjust page navigation for mobile */
-            .page-navigation {
-                bottom: 100px;
-            }
-        }
-        
-        @media (min-width: 769px) {
-            .desktop-corner-button {
-                display: flex;
-            }
-        }
-        
-        /*
-        **************************************************
-        SECTIONS & BUTTONS
-        **************************************************
-        */
-
-        /* Main Website */
-        .main-website {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        .main-website.active {
-            display: block;
-            opacity: 1;
-        }
-
-        section {
-            padding: 80px 0;
-            display: none;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.5s ease;
-        }
-
-        section.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-            font-size: 2.5rem;
-            position: relative;
-        }
-
-        /* Bot Card Grid */
-        .button-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-
-        /* List Mode Styles */
-        .list-mode .button-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .list-mode .btn-card {
+        .logo-area {
             display: flex;
             align-items: center;
-            text-align: left;
-            padding: 20px;
+            gap: 1rem;
         }
 
-        .list-mode .btn-icon {
-            margin-bottom: 0;
-            margin-right: 20px;
-            font-size: 2rem;
-        }
-
-        .list-mode .btn-title {
-            margin-bottom: 5px;
-        }
-
-        .list-mode .btn-desc {
-            margin-bottom: 0;
-        }
-
-        .list-mode .btn-link, .list-mode .bot-info-button {
-            margin-left: auto;
-        }
-
-        .btn-card {
-            background: var(--card-bg);
+        .logo-icon {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #f5b748, #ff8c42);
             border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            transition: all 0.4s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            position: relative;
-            overflow: hidden;
-            transform-style: preserve-3d;
-            perspective: 1000px;
-            box-shadow: var(--bot-card-shadow);
-            cursor: pointer; /* Added cursor pointer */
-        }
-        
-        .btn-card:hover {
-            transform: translateY(-15px) rotateX(5deg) scale(1.02);
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-            border-color: var(--accent); /* Highlight on hover */
-        }
-
-        .btn-link, .back-button, .bot-info-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            color: white;
-            padding: 12px 25px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .back-button {
-            background: var(--card-bg);
-            color: var(--text-primary);
-            border: 2px solid transparent;
-            backdrop-filter: blur(10px);
-            margin-bottom: 30px;
-        }
-        
-        .back-button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: var(--accent);
-            transform: translateX(-5px);
-        }
-        
-        /*
-        **************************************************
-        BOT INFO PAGE STYLES
-        **************************************************
-        */
-        
-        .bot-info-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 800px;
-            margin: 0 auto;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .bot-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .bot-image {
-            width: 150px;
-            height: 150px;
-            background-color: var(--primary);
-            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 3rem;
-            color: white;
-            box-shadow: 0 0 20px var(--accent);
-            border: 5px solid white;
-            transition: all 0.3s ease;
-            overflow: hidden;
-            position: relative;
+            font-size: 2rem;
+            color: #fff;
+            transform: rotate(-5deg);
+            box-shadow: 0 10px 20px #ff8c4280;
         }
 
-        .bot-image span {
-            font-size: 1.2rem;
-            font-weight: 700;
-            position: absolute;
-            bottom: -5px;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 2px 10px;
-            border-radius: 5px;
-        }
-        
-        .bot-name {
-            font-size: 2.5rem;
-            background: linear-gradient(to right, var(--accent), var(--primary));
+        .logo-text {
+            font-family: 'Righteous', cursive;
+            font-size: 2rem;
+            background: linear-gradient(135deg, #ffd966, #ffb347, #ff8c42);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            font-weight: 700;
-        }
-        
-        .bot-details p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 20px;
-            color: var(--text-secondary);
-            border-left: 4px solid var(--accent);
-            padding-left: 15px;
-        }
-        
-        .bot-details strong {
-            color: var(--text-primary);
+            letter-spacing: 1px;
         }
 
-        .bot-features ul {
-            list-style: none;
-            padding: 0;
-            margin-top: 20px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+        .stats-pill {
+            display: flex;
+            gap: 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
         }
 
-        .bot-features li {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 10px 15px;
-            border-radius: 10px;
+        .stat-pill-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
+            gap: 0.5rem;
         }
 
-        .bot-features li:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateX(5px);
-        }
-        
-        .bot-features li i {
-            color: var(--success);
-        }
-        
-        .bot-action-buttons {
-            text-align: center;
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-        
-        .bot-action-buttons a {
-            flex: 1;
-            max-width: 250px;
-            padding: 15px 30px;
-            font-size: 1.1rem;
+        .stat-pill-number {
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: #f5b748;
         }
 
-        /* Responsive Bot Features */
-        @media (max-width: 600px) {
-            .bot-features ul {
-                grid-template-columns: 1fr;
-            }
-            .bot-info-card {
-                padding: 20px;
-            }
-            .bot-action-buttons {
-                flex-direction: column;
-            }
-            .bot-action-buttons a {
-                max-width: 100%;
-            }
-        }
-        
-        /*
-        **************************************************
-        BOT IMAGE LOGIC (Custom Placeholder)
-        **************************************************
-        */
-        
-        .bot-image.bg-movie { background-color: #ff6b6b; }
-        .bot-image.bg-free { background-color: #28a745; }
-        .bot-image.bg-ai { background-color: #17a2b8; }
-        .bot-image.bg-earn { background-color: #ffc107; }
-        
-        /* Rest of the original CSS styles remain below */
-        
-        /* ... (The rest of your existing CSS code from the user's input) ... */
-
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 80px 0;
-            animation: fadeInUp 1s ease;
-        }
-
-        /* Stats Section */
-        .stats-container {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin: 40px 0;
-            flex-wrap: wrap;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 20px;
-            background: var(--card-bg);
-            border-radius: 15px;
-            min-width: 150px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
+        .stat-pill-label {
+            color: #b9b2d1;
             font-size: 0.9rem;
         }
 
-        /* Main Button */
-        .main-button {
-            background: linear-gradient(to right, var(--accent), #ff8e53);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 20px 40px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
+        /* Hero Section */
+        .hero-section {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin: 40px auto;
-            width: 350px;
-            animation: float 3s ease-in-out infinite, glow 2s infinite alternate;
-            position: relative;
-            overflow: hidden;
+            margin: 3rem 0 4rem;
+            flex-wrap: wrap;
+            gap: 2rem;
         }
 
-        .main-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-        }
-
-        .main-button i {
-            font-size: 1.8rem;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            border-radius: 2px;
-        }
-
-        /* About Section */
-        .about-content {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .about-text {
+        .hero-content {
             flex: 1;
+            min-width: 300px;
         }
 
-        .about-text p {
-            margin-bottom: 20px;
-            line-height: 1.6;
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-        }
-
-        .about-image {
-            flex: 1;
-            text-align: center;
-        }
-
-        .profile-img {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid var(--primary);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            animation: float 6s ease-in-out infinite;
-            transition: all 0.3s ease;
-        }
-
-        .profile-img:hover {
-            transform: scale(1.05);
-            border-color: var(--accent);
-        }
-
-        /* Button Grid */
-        .btn-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .btn-card:hover .btn-icon {
-            transform: scale(1.2) rotate(10deg);
-        }
-
-        .btn-title {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--text-primary);
+        .hero-tagline {
+            font-size: 1.2rem;
+            color: #f5b748;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
             font-weight: 600;
         }
 
-        .btn-desc {
-            color: var(--text-secondary);
-            margin-bottom: 25px;
-            line-height: 1.6;
-            font-size: 1rem;
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
         }
 
-        .bot-info-button {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        .hero-title span {
+            background: linear-gradient(135deg, #ffd966, #ff8c42, #ff5e62);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
         }
 
-        /* Button Colors */
-        .btn-movie {
-            background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+        .hero-description {
+            font-size: 1.1rem;
+            color: #c4b9e0;
+            max-width: 500px;
+            margin-bottom: 2rem;
         }
 
-        .btn-free {
-            background: linear-gradient(135deg, #28a745, #20c997);
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
 
-        .btn-ai {
-            background: linear-gradient(135deg, #17a2b8, #6f42c1);
+        .btn-primary {
+            background: linear-gradient(135deg, #f5b748, #ff8c42);
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #0f0a1f;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 15px 25px #ff8c4280;
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        .btn-earn {
-            background: linear-gradient(135deg, #ffc107, #fd7e14);
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 30px #ff8c42b3;
         }
 
-        .btn-youtube {
-            background: linear-gradient(135deg, var(--youtube), #cc0000);
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #f5b748;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #f5b748;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        .btn-group {
-            background: linear-gradient(135deg, #8e2de2, #4a00e0);
+        .btn-secondary:hover {
+            background: #f5b74820;
+            border-color: #ff8c42;
+            color: #ff8c42;
         }
 
-        .btn-premium {
-            background: linear-gradient(135deg, #ff6b6b, #8e2de2);
-        }
-
-        .btn-contact {
-            background: linear-gradient(135deg, #17a2b8, #20c997);
-        }
-
-        /* Image Gallery */
-        .image-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        .gallery-item {
+        .hero-image {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            justify-content: center;
             position: relative;
-            border-radius: 15px;
-            overflow: hidden;
-            height: 200px;
-            transition: all 0.3s ease;
         }
 
-        .gallery-item img {
+        .floating-card {
+            background: rgba(30, 25, 55, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 30px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 350px;
+            box-shadow: 0 30px 50px #00000080;
+            animation: floatCard 6s infinite;
+        }
+
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+
+        .floating-card-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-item-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3b2a5a, #1f1738);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #f5b748;
+        }
+
+        .card-item-text h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .card-item-text p {
+            color: #b9b2d1;
+            font-size: 0.85rem;
+        }
+
+        /* Section Title */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 3rem 0 2rem;
+        }
+
+        .title-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f5b748, #ff8c42);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #0f0a1f;
+            transform: rotate(5deg);
+        }
+
+        .title-text {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #f5b748);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .title-text small {
+            font-size: 1rem;
+            color: #b9b2d1;
+            font-weight: 400;
+            margin-left: 1rem;
+        }
+
+        /* Bot Grid */
+        .bot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        /* Premium Bot Card */
+        .bot-card {
+            background: rgba(25, 20, 45, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 30px;
+            padding: 2rem 1.5rem;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bot-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: all 0.3s ease;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transition: left 0.7s;
         }
 
-        .gallery-overlay {
+        .bot-card:hover::before {
+            left: 100%;
+        }
+
+        .bot-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: #f5b748;
+            box-shadow: 0 30px 40px -15px #000, 0 0 0 2px #f5b74820 inset;
+        }
+
+        /* Actual Bot Images */
+        .bot-image {
+            width: 110px;
+            height: 110px;
+            border-radius: 30px;
+            margin-bottom: 1.5rem;
+            background-size: cover;
+            background-position: center;
+            border: 4px solid #f5b748;
+            box-shadow: 0 20px 30px -10px #000;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bot-image::after {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: linear-gradient(145deg, transparent 50%, rgba(255, 215, 0, 0.2));
+        }
+
+        .bot-card:hover .bot-image {
+            transform: rotate(5deg) scale(1.05);
+            border-color: #ffd966;
+        }
+
+        /* Bot Image Backgrounds (Realistic Bot Avatars) */
+        .bot-img-1 { background-image: url('https://ui-avatars.com/api/?name=AS+Filter&size=110&background=ff8c42&color=fff&bold=true&length=2&rounded=true'); }
+        .bot-img-2 { background-image: url('https://ui-avatars.com/api/?name=Movie+Pro&size=110&background=f5b748&color=000&bold=true&length=2&rounded=true'); }
+        .bot-img-3 { background-image: url('https://ui-avatars.com/api/?name=Free+Movie&size=110&background=2d7842&color=fff&bold=true&length=2&rounded=true'); }
+        .bot-img-4 { background-image: url('https://ui-avatars.com/api/?name=Angel+AI&size=110&background=285e9e&color=fff&bold=true&length=2&rounded=true'); }
+        .bot-img-5 { background-image: url('https://ui-avatars.com/api/?name=Earn+Bot&size=110&background=b17d26&color=fff&bold=true&length=2&rounded=true'); }
+        .bot-img-6 { background-image: url('https://ui-avatars.com/api/?name=YT+Channel&size=110&background=b12e2e&color=fff&bold=true&length=2&rounded=true'); }
+
+        .bot-category {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: #f5b748;
+            border: 1px solid #f5b74840;
+            margin-bottom: 1rem;
+        }
+
+        .bot-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff, #f5b748);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .bot-description {
+            color: #b9b2d1;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .bot-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-tag {
+            background: rgba(245, 183, 72, 0.1);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: #f5b748;
+            border: 1px solid #f5b74830;
+        }
+
+        .bot-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-telegram {
+            background: linear-gradient(135deg, #2AABEE, #229ED9);
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            flex: 1;
+            justify-content: center;
+        }
+
+        .btn-telegram:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px #2AABEE80;
+        }
+
+        .btn-details {
+            background: rgba(255, 255, 255, 0.05);
+            color: #f5b748;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 1px solid #f5b74860;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .btn-details:hover {
+            background: #f5b74820;
+            border-color: #f5b748;
+        }
+
+        /* Groups Grid */
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.2rem;
+            margin: 2rem 0;
+        }
+
+        .group-card {
+            background: rgba(20, 15, 40, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 25px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: white;
+        }
+
+        .group-card:hover {
+            transform: translateX(5px);
+            border-color: #f5b748;
+            background: rgba(30, 25, 55, 0.8);
+        }
+
+        .group-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3b2a5a, #1f1738);
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            color: #f5b748;
         }
 
-        .gallery-item:hover .gallery-overlay {
-            opacity: 1;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .view-demo {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        /* Testimonials */
-        .testimonial-slider {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            overflow: hidden;
-            height: 200px;
-        }
-
-        .testimonial {
-            text-align: center;
-            padding: 30px;
-            background: var(--card-bg);
-            border-radius: 15px;
-            margin: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            position: absolute;
-            width: 100%;
-            opacity: 0;
-            transition: all 0.5s ease;
-        }
-
-        .testimonial.active {
-            opacity: 1;
-        }
-
-        .testimonial-text {
+        .group-info h4 {
             font-size: 1.2rem;
-            font-style: italic;
-            margin-bottom: 15px;
-            color: var(--text-secondary);
+            margin-bottom: 0.2rem;
         }
 
-        .testimonial-author {
+        .group-info p {
+            color: #b9b2d1;
+            font-size: 0.85rem;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 4rem 0;
+            padding: 2rem;
+            background: rgba(20, 15, 40, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 215, 0, 0.15);
+        }
+
+        .stat-block {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f5b748, #ff8c42);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .stat-label {
+            color: #b9b2d1;
+            font-size: 1.1rem;
+        }
+
+        /* Info Panel */
+        .info-panel {
+            background: rgba(25, 20, 45, 0.95);
+            backdrop-filter: blur(20px);
+            border: 2px solid #f5b748;
+            border-radius: 30px;
+            padding: 2rem;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .info-panel.active {
+            display: block;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .info-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .info-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 30px;
+            background-size: cover;
+            border: 4px solid #f5b748;
+        }
+
+        .info-name {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #f5b748;
+        }
+
+        .info-description {
+            color: #e0d9f0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .info-close {
+            background: transparent;
+            border: 2px solid #f5b748;
+            color: #f5b748;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
             font-weight: 600;
-            color: var(--accent);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .info-close:hover {
+            background: #f5b748;
+            color: #0f0a1f;
         }
 
         /* Footer */
-        footer {
-            text-align: center;
-            padding: 40px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 50px;
-            color: var(--text-secondary);
+        .footer {
+            margin-top: 4rem;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 215, 0, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
         }
 
         .social-links {
             display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin: 25px 0;
+            gap: 1.5rem;
         }
 
-        .social-links a {
-            color: var(--text-secondary);
-            font-size: 1.8rem;
-            transition: all 0.3s ease;
-            padding: 15px;
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: rgba(20, 15, 40, 0.8);
             border-radius: 50%;
-            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f5b748;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+            border: 1px solid #f5b74840;
+            text-decoration: none;
         }
 
-        /* King Animation */
-        .king-animation {
+        .social-link:hover {
+            background: #f5b748;
+            color: #0f0a1f;
+            transform: translateY(-5px);
+        }
+
+        /* King Overlay */
+        .king-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            display: flex;
-            flex-direction: column;
+            background: rgba(10, 5, 20, 0.95);
+            backdrop-filter: blur(15px);
+            display: none;
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            animation: fadeIn 0.5s ease;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .king-overlay.active {
+            display: flex;
+            animation: fadeIn 0.5s;
         }
 
         .king-icon {
-            font-size: 10rem;
+            font-size: 8rem;
             color: gold;
-            animation: pulse 1s infinite, float 2s ease-in-out infinite;
-            text-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
-            margin-bottom: 30px;
+            filter: drop-shadow(0 0 30px #ffbf00);
+            animation: kingPulse 2s infinite;
+        }
+
+        @keyframes kingPulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 30px #ffbf00); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 60px #ffbf00); }
         }
 
         .king-text {
-            color: white;
             font-size: 4rem;
-            margin-bottom: 20px;
-            animation: pulse 1.5s infinite;
-            text-align: center;
-            background: linear-gradient(45deg, gold, #ffd700, #ffed4e, gold);
+            font-weight: 800;
+            background: linear-gradient(135deg, gold, #ffd700, #ffed4e);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
 
-        /* Particles Background */
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
+        .btn-dismiss {
+            background: gold;
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        /* Language Specific Styles */
-        .hindi-content {
-            display: none;
+        .btn-dismiss:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px gold;
         }
 
-        .english-content {
-            display: block;
-        }
-
-        body[data-lang="hindi"] .hindi-content {
-            display: block;
-        }
-
-        body[data-lang="hindi"] .english-content {
-            display: none;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes fadeInUp {
-            from { 
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
-        }
-
-        @keyframes glow {
-            from { 
-                box-shadow: 0 0 20px rgba(255, 107, 107, 0.5),
-                          0 0 40px rgba(255, 107, 107, 0.3),
-                          0 0 60px rgba(255, 107, 107, 0.1);
-            }
-            to { 
-                box-shadow: 0 0 30px rgba(255, 107, 107, 0.8),
-                          0 0 60px rgba(255, 107, 107, 0.5),
-                          0 0 90px rgba(255, 107, 107, 0.3);
-            }
-        }
-
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        .typing-animation {
-            overflow: hidden;
-            border-right: 3px solid var(--accent);
-            white-space: nowrap;
-            margin: 0 auto;
-            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
-        }
-
-        @keyframes blink-caret {
-            from, to { border-color: transparent; }
-            50% { border-color: var(--accent); }
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .about-content {
-                flex-direction: column;
-            }
-            
-            .button-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .main-button {
-                width: 300px;
-                font-size: 1.3rem;
-                padding: 15px 30px;
-            }
-            
-            .king-text {
-                font-size: 2.5rem;
-            }
-            
-            .king-icon {
-                font-size: 6rem;
-            }
-            
-            .language-buttons {
-                flex-direction: column;
-                gap: 20px;
-            }
-            
-            .lang-btn {
-                min-width: 250px;
-            }
-            
-            .stats-container {
-                gap: 20px;
-            }
-            
-            .stat-item {
-                min-width: 120px;
-            }
+            .hero-title { font-size: 2.5rem; }
+            .stats-pill { flex-wrap: wrap; justify-content: center; }
+            .bot-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loader">
-            <div class="loader-text hindi-content">शानदार अनुभव लोड हो रहा है...</div>
-            <div class="loader-text english-content">Loading Awesome Experience...</div>
-            <div class="progress-bar">
-                <div class="progress"></div>
+    <div class="gradient-bg"></div>
+    <div class="floating-shapes">
+        <div class="shape" style="width: 300px; height: 300px; top: 10%; left: 5%; animation-delay: 0s;"></div>
+        <div class="shape" style="width: 200px; height: 200px; bottom: 20%; right: 10%; animation-delay: 5s;"></div>
+    </div>
+
+    <div class="premium-container">
+        <!-- Glass Header -->
+        <header class="glass-header">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <span class="logo-text">AS BHAI BSR</span>
             </div>
-            <div class="loader-percentage">0%</div>
-        </div>
-    </div>
-
-    <div class="theme-toggle" id="themeToggle">
-        <i class="fas fa-moon"></i>
-    </div>
-
-    <!-- Desktop Corner Button -->
-    <div class="desktop-corner-button" id="desktopCornerBtn">
-        <i class="fas fa-crown"></i>
-    </div>
-
-    <!-- List Mode Toggle -->
-    <div class="list-mode-toggle" id="listModeToggle">
-        <i class="fas fa-list"></i>
-    </div>
-
-    <!-- Page Navigation -->
-    <div class="page-navigation">
-        <div class="page-nav-btn" id="prevPageBtn">
-            <i class="fas fa-arrow-left"></i>
-        </div>
-        <div class="page-nav-btn" id="nextPageBtn">
-            <i class="fas fa-arrow-right"></i>
-        </div>
-    </div>
-
-    <div class="custom-cursor"></div>
-    <div class="cursor-dot"></div>
-
-    <div class="language-screen" id="languageScreen">
-        <h1 class="language-title">अपनी भाषा चुनें (Choose Your Language)</h1>
-        <div class="language-buttons">
-            <button class="lang-btn" id="hindiBtn">
-                <i class="fas fa-language"></i>
-                हिंदी (Hindi)
-            </button>
-            <button class="lang-btn" id="englishBtn">
-                <i class="fas fa-globe"></i>
-                English
-            </button>
-        </div>
-    </div>
-
-    <div class="main-website" id="mainWebsite">
-        <div id="particles-js"></div>
-
-        <div class="container">
-            <header>
-                <div class="logo">
-                    <i class="fas fa-robot"></i>
-                    <span class="english-content">As Bhai Bsr</span>
-                    <span class="hindi-content">आस भाई बीएसआर</span>
+            <div class="stats-pill">
+                <div class="stat-pill-item">
+                    <i class="fas fa-users" style="color: #f5b748;"></i>
+                    <span class="stat-pill-number">55K+</span>
+                    <span class="stat-pill-label">Users</span>
                 </div>
-                <nav id="mainNav">
-                    <ul>
-                        <li><a href="#" data-target="home" class="english-content active">Home</a>
-                            <a href="#" data-target="home" class="hindi-content active">होम</a></li>
-                        <li><a href="#" data-target="about" class="english-content">About</a>
-                            <a href="#" data-target="about" class="hindi-content">जानकारी</a></li>
-                        <li><a href="#" data-target="bots" class="english-content">Bots</a>
-                            <a href="#" data-target="bots" class="hindi-content">बॉट्स</a></li>
-                        <li><a href="#" data-target="groups" class="english-content">Groups</a>
-                            <a href="#" data-target="groups" class="hindi-content">ग्रुप्स</a></li>
-                        <li><a href="#" data-target="contact" class="english-content">Contact</a>
-                            <a href="#" data-target="contact" class="hindi-content">संपर्क</a></li>
-                    </ul>
-                </nav>
-                <div class="menu-toggle" id="menuToggle">
-                    <i class="fas fa-bars"></i>
+                <div class="stat-pill-item">
+                    <i class="fas fa-robot" style="color: #f5b748;"></i>
+                    <span class="stat-pill-number">18+</span>
+                    <span class="stat-pill-label">Bots</span>
                 </div>
-            </header>
+                <div class="stat-pill-item">
+                    <i class="fas fa-bolt" style="color: #f5b748;"></i>
+                    <span class="stat-pill-number">5K</span>
+                    <span class="stat-pill-label">Daily</span>
+                </div>
+            </div>
+        </header>
 
-            <section id="home" class="active">
-                <div class="hero">
-                    <h1 class="typing-animation english-content">Welcome to As Bhai Bsr</h1>
-                    <h1 class="typing-animation hindi-content">आस भाई बीएसआर में आपका स्वागत है</h1>
-                    
-                    <p class="english-content">Professional Telegram bot services, movie search solutions, and engaging communities. Explore our range of services designed to enhance your Telegram experience.</p>
-                    <p class="hindi-content">**पेशेवर** टेलीग्राम बॉट सेवाएं, मूवी खोजने के समाधान, और **शानदार** समुदाय। अपने टेलीग्राम अनुभव को **और बेहतर** बनाने के लिए डिज़ाइन की गई हमारी सेवाओं को देखें।</p>
-                    
-                    <div class="stats-container">
-                        <div class="stat-item">
-                            <div class="stat-number" data-count="55000">0</div>
-                            <div class="stat-label english-content">Users Served</div>
-                            <div class="stat-label hindi-content">उपयोगकर्ता संतुष्ट</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number" data-count="18">0</div>
-                            <div class="stat-label english-content">Bots Created</div>
-                            <div class="stat-label hindi-content">बॉट्स बनाए</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number" data-count="5000">0</div>
-                            <div class="stat-label english-content">Daily Requests</div>
-                            <div class="stat-label hindi-content">दैनिक अनुरोध</div>
-                        </div>
-                    </div>
-                    
-                    <button class="main-button" id="aboutMeBtn">
-                        <i class="fas fa-crown"></i> 
-                        <span class="english-content">About Me</span>
-                        <span class="hindi-content">मेरे बारे में</span>
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <div class="hero-tagline">✦ PREMIUM BOT SERVICES ✦</div>
+                <h1 class="hero-title">Welcome To <span>The Kingdom</span> Of Bots</h1>
+                <p class="hero-description">Experience the most advanced Telegram bot ecosystem with premium features, instant access, and 24/7 support.</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary" id="kingBtn">
+                        <i class="fas fa-crown"></i>
+                        Meet The King
                     </button>
-                    
-                    <div class="button-grid">
-                        <div class="btn-card" data-target="bots">
-                            <div class="btn-icon" style="color: #ff6b6b;">
-                                <i class="fas fa-film"></i>
-                            </div>
-                            <h3 class="btn-title english-content">Movie Bots</h3>
-                            <h3 class="btn-title hindi-content">मूवी बॉट्स</h3>
-                            <p class="btn-desc english-content">Premium and free movie search bots for all your entertainment needs with advanced filtering options</p>
-                            <p class="btn-desc hindi-content">**प्रीमियम और मुफ्त** मूवी खोज बॉट। अपनी पसंद की फिल्में **आसानी से** ढूँढें।</p>
-                            <a href="#" class="btn-link btn-movie" data-target="bots">
-                                <i class="fas fa-arrow-right"></i> 
-                                <span class="english-content">Explore Bots</span>
-                                <span class="hindi-content">बॉट्स देखें</span>
-                            </a>
-                        </div>
-                        
-                        <div class="btn-card" data-target="groups">
-                            <div class="btn-icon" style="color: #8e2de2;">
-                                <i class="fab fa-telegram"></i>
-                            </div>
-                            <h3 class="btn-title english-content">Telegram Groups</h3>
-                            <h3 class="btn-title hindi-content">टेलीग्राम ग्रुप्स</h3>
-                            <p class="btn-desc english-content">Join our active communities for movies, premium apps, web series and entertainment content</p>
-                            <p class="btn-desc hindi-content">मूवी, प्रीमियम ऐप्स, वेब सीरीज और मनोरंजन सामग्री के लिए हमारे **सक्रिय** समुदायों से जुड़ें।</p>
-                            <a href="#" class="btn-link btn-group" data-target="groups">
-                                <i class="fas fa-arrow-right"></i> 
-                                <span class="english-content">View Groups</span>
-                                <span class="hindi-content">ग्रुप्स देखें</span>
-                            </a>
-                        </div>
-                        
-                        <div class="btn-card">
-                            <div class="btn-icon" style="color: #ff0000;">
-                                <i class="fab fa-youtube"></i>
-                            </div>
-                            <h3 class="btn-title english-content">YouTube Channel</h3>
-                            <h3 class="btn-title hindi-content">यूट्यूब चैनल</h3>
-                            <p class="btn-desc english-content">Check out our YouTube channel for latest updates, tutorials and entertainment content</p>
-                            <p class="btn-desc hindi-content">नवीनतम अपडेट, ट्यूटोरियल और मनोरंजन सामग्री के लिए हमारा **यूट्यूब चैनल** देखें।</p>
-                            <a href="https://youtube.com/@asbhaibsr?si=PD50RLuxWISAs833" class="btn-link btn-youtube" target="_blank">
-                                <i class="fas fa-external-link-alt"></i> 
-                                <span class="english-content">Visit Channel</span>
-                                <span class="hindi-content">चैनल देखें</span>
-                            </a>
-                        </div>
-                        
-                        <div class="btn-card" data-target="bots">
-                            <div class="btn-icon" style="color: #17a2b8;">
-                                <i class="fas fa-robot"></i>
-                            </div>
-                            <h3 class="btn-title english-content">AI Chat Bot</h3>
-                            <h3 class="btn-title hindi-content">एआई चैट बॉट</h3>
-                            <p class="btn-desc english-content">Self-learning AI bot for engaging conversations, study help, motivation and entertainment</p>
-                            <p class="btn-desc hindi-content">बातचीत, पढ़ाई में मदद और मनोरंजन के लिए **स्व-सीखने वाला** एआई बॉट।</p>
-                            <a href="#" class="btn-link btn-ai" data-target="bots">
-                                <i class="fas fa-arrow-right"></i> 
-                                <span class="english-content">Learn More</span>
-                                <span class="hindi-content">और जानें</span>
-                            </a>
+                    <a href="https://t.me/asbhaibsr" class="btn-secondary" target="_blank">
+                        <i class="fab fa-telegram"></i>
+                        Contact Now
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="floating-card">
+                    <div class="floating-card-item">
+                        <div class="card-item-icon"><i class="fas fa-film"></i></div>
+                        <div class="card-item-text">
+                            <h4>Movie Bots</h4>
+                            <p>Advanced search & filters</p>
                         </div>
                     </div>
-
-                    <div class="testimonial-slider">
-                        <div class="testimonial active">
-                            <div class="testimonial-text english-content">"Amazing bots! Best movie search experience I've ever had. Fast and reliable."</div>
-                            <div class="testimonial-text hindi-content">"अद्भुत बॉट्स! अब तक का सबसे अच्छा मूवी खोजने का अनुभव। तेज और विश्वसनीय।"</div>
-                            <div class="testimonial-author">- Happy User</div>
+                    <div class="floating-card-item">
+                        <div class="card-item-icon"><i class="fas fa-coins"></i></div>
+                        <div class="card-item-text">
+                            <h4>Earning Bots</h4>
+                            <p>Real money rewards</p>
                         </div>
-                        <div class="testimonial">
-                            <div class="testimonial-text english-content">"The AI chatbot is incredibly helpful for studying and motivation. Highly recommended!"</div>
-                            <div class="testimonial-text hindi-content">"एआई चैटबॉट पढ़ाई और प्रेरणा के लिए **बहुत** मददगार है। मैं इसकी सलाह देता हूँ!"</div>
-                            <div class="testimonial-author">- Student User</div>
-                        </div>
-                        <div class="testimonial">
-                            <div class="testimonial-text english-content">"Great community and support. Always get quick responses to my queries."</div>
-                            <div class="testimonial-text hindi-content">"शानदार समुदाय और अच्छा समर्थन। मेरे सवालों का हमेशा **तुरंत** जवाब मिलता है।"</div>
-                            <div class="testimonial-author">- Community Member</div>
+                    </div>
+                    <div class="floating-card-item">
+                        <div class="card-item-icon"><i class="fas fa-robot"></i></div>
+                        <div class="card-item-text">
+                            <h4>AI Assistant</h4>
+                            <p>Smart & helpful</p>
                         </div>
                     </div>
                 </div>
-            </section>
-
-            <section id="about">
-                <a href="#" class="back-button" data-target="home">
-                    <i class="fas fa-arrow-left"></i> 
-                    <span class="english-content">Back to Home</span>
-                    <span class="hindi-content">होम पर वापस</span>
-                </a>
-                <h2 class="section-title english-content">About Me</h2>
-                <h2 class="section-title hindi-content">मेरे बारे में</h2>
-                <div class="about-content">
-                    <div class="about-text">
-                        <p class="english-content">Hello! I'm As Bhai Bsr, a passionate Telegram bot developer and digital content creator. I specialize in creating advanced bots for movie searching, AI conversations, and community management.</p>
-                        <p class="hindi-content">नमस्ते! मैं **आस भाई बीएसआर** हूँ, एक **उत्कृष्ट** टेलीग्राम बॉट डेवलपर और डिजिटल कंटेंट क्रिएटर। मैं मूवी खोजने, एआई बातचीत और ग्रुप मैनेजमेंट के लिए **बेहतरीन** बॉट बनाने में माहिर हूँ।</p>
-                        
-                        <p class="english-content">With expertise in developing sophisticated Telegram solutions, I've created multiple successful bots that serve thousands of users daily. My focus is on creating user-friendly interfaces with powerful functionality.</p>
-                        <p class="hindi-content">**एडवांस** टेलीग्राम समाधानों को विकसित करने की विशेषज्ञता के साथ, मैंने कई सफल बॉट बनाए हैं जो हजारों उपयोगकर्ताओं को **हर दिन** सेवा देते हैं। मेरा मुख्य लक्ष्य **शक्तिशाली** कार्यक्षमता के साथ **आसान** इंटरफेस बनाना है।</p>
-                        
-                        <p class="english-content"><strong>Telegram ID:</strong> <a href="https://t.me/asbhaibsr" target="_blank" style="color: var(--accent);">@asbhaibsr</a></p>
-                        <p class="hindi-content"><strong>टेलीग्राम आईडी:</strong> <a href="https://t.me/asbhaibsr" target="_blank" style="color: var(--accent);">@asbhaibsr</a></p>
-                        
-                        <p class="english-content"><strong>Experience:</strong> 3+ years in bot development</p>
-                        <p class="hindi-content"><strong>अनुभव:</strong> बॉट डेवलपमेंट में **3+ साल**</p>
-                        
-                        <p class="english-content"><strong>Specialization:</strong> Movie search algorithms, AI chatbots, Automation systems</p>
-                        <p class="hindi-content"><strong>विशेषज्ञता:</strong> मूवी सर्च, एआई चैटबॉट और **ऑटोमेशन सिस्टम**</p>
-                    </div>
-                    <div class="about-image">
-                        <img src="https://via.placeholder.com/300x300/4a00e0/ffffff?text=As+Bhai+Bsr+The+King" alt="As Bhai Bsr" class="profile-img">
-                    </div>
-                </div>
-
-                <h3 class="section-title english-content" style="margin-top: 50px;">Our Work in Action</h3>
-                <h3 class="section-title hindi-content" style="margin-top: 50px;">हमारे काम की झलक</h3>
-                <div class="image-gallery">
-                    <div class="gallery-item">
-                        <img src="https://via.placeholder.com/300x200/8e2de2/ffffff?text=Movie+Bot+Menu" alt="Bot Interface">
-                        <div class="gallery-overlay">
-                            <button class="view-demo english-content">View Demo</button>
-                            <button class="view-demo hindi-content">डेमो देखें</button>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://via.placeholder.com/300x200/ff6b6b/ffffff?text=Advanced+Search" alt="Movie Search">
-                        <div class="gallery-overlay">
-                            <button class="view-demo english-content">View Demo</button>
-                            <button class="view-demo hindi-content">डेमो देखें</button>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://via.placeholder.com/300x200/17a2b8/ffffff?text=AI+Conversation" alt="AI Chat">
-                        <div class="gallery-overlay">
-                            <button class="view-demo english-content">View Demo</button>
-                            <button class="view-demo hindi-content">डेमो देखें</button>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://via.placeholder.com/300x200/28a745/ffffff?text=Channel+Posting" alt="User Interface">
-                        <div class="gallery-overlay">
-                            <button class="view-demo english-content">View Demo</button>
-                            <button class="view-demo hindi-content">डेमो देखें</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="bots">
-                <a href="#" class="back-button" data-target="home">
-                    <i class="fas fa-arrow-left"></i> 
-                    <span class="english-content">Back to Home</span>
-                    <span class="hindi-content">होम पर वापस</span>
-                </a>
-                <h2 class="section-title english-content">My Bots</h2>
-                <h2 class="section-title hindi-content">मेरे बॉट्स</h2>
-                
-                <div class="button-grid">
-                    <div class="btn-card" data-bot-id="asfilter_bot" data-bot-category="movie" data-bot-icon="fas fa-film" data-bot-color="#ff6b6b">
-                        <div class="btn-icon" style="color: #ff6b6b;">
-                            <i class="fas fa-film"></i>
-                        </div>
-                        <h3 class="btn-title english-content">Movie Search Bot</h3>
-                        <h3 class="btn-title hindi-content">मूवी खोज बॉट</h3>
-                        <p class="btn-desc english-content">Advanced movie search bot with extensive database. Find any movie with multiple filter options and direct download links.</p>
-                        <p class="btn-desc hindi-content">**विशाल** डेटाबेस के साथ उन्नत मूवी खोज बॉट। **कोई भी** मूवी **आसानी** से ढूँढें।</p>
-                        <button class="bot-info-button btn-movie" data-bot-id="asfilter_bot">
-                            <i class="fas fa-info-circle"></i> 
-                            <span class="english-content">View Details</span>
-                            <span class="hindi-content">जानकारी देखें</span>
-                        </button>
-                    </div>
-                    
-                    <div class="btn-card" data-bot-id="AsMoviesSearch_roBot" data-bot-category="movie" data-bot-icon="fas fa-video" data-bot-color="#ff6b6b">
-                        <div class="btn-icon" style="color: #ff6b6b;">
-                            <i class="fas fa-video"></i>
-                        </div>
-                        <h3 class="btn-title english-content">Movie Search Bot Pro</h3>
-                        <h3 class="btn-title hindi-content">मूवी खोज बॉट प्रो</h3>
-                        <p class="btn-desc english-content">Premium movie search experience with ad-free interface, faster results, and exclusive content access.</p>
-                        <p class="btn-desc hindi-content">विज्ञापन-मुक्त इंटरफेस, **तेज रिजल्ट** और **एक्सक्लूसिव कंटेंट** के साथ प्रीमियम मूवी खोज का अनुभव।</p>
-                        <button class="bot-info-button btn-movie" data-bot-id="AsMoviesSearch_roBot">
-                            <i class="fas fa-info-circle"></i> 
-                            <span class="english-content">View Details</span>
-                            <span class="hindi-content">जानकारी देखें</span>
-                        </button>
-                    </div>
-                    
-                    <div class="btn-card" data-bot-id="AsfreefilterBot" data-bot-category="movie" data-bot-icon="fas fa-download" data-bot-color="#28a745">
-                        <div class="btn-icon" style="color: #28a745;">
-                            <i class="fas fa-download"></i>
-                        </div>
-                        <h3 class="btn-title english-content">Free Movie Search Bot</h3>
-                        <h3 class="btn-title hindi-content">मुफ्त मूवी खोज बॉट</h3>
-                        <p class="btn-desc english-content">Completely free movie search bot with basic features. Perfect for users who want essential movie searching capabilities.</p>
-                        <p class="btn-desc hindi-content">बुनियादी सुविधाओं के साथ **पूरी तरह से मुफ्त** मूवी खोज बॉट। जरूरी मूवी सर्च के लिए **उत्तम**।</p>
-                        <button class="bot-info-button btn-free" data-bot-id="AsfreefilterBot">
-                            <i class="fas fa-info-circle"></i> 
-                            <span class="english-content">View Details</span>
-                            <span class="hindi-content">जानकारी देखें</span>
-                        </button>
-                    </div>
-                    
-                    <div class="btn-card" data-bot-id="askiangelbot" data-bot-category="ai" data-bot-icon="fas fa-robot" data-bot-color="#17a2b8">
-                        <div class="btn-icon" style="color: #17a2b8;">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <h3 class="btn-title english-content">AI Chat Assistant</h3>
-                        <h3 class="btn-title hindi-content">एआई चैट सहायक</h3>
-                        <p class="btn-desc english-content">Intelligent AI bot for natural conversations, study assistance, motivation, and entertainment in group chats.</p>
-                        <p class="btn-desc hindi-content">बातचीत, पढ़ाई में मदद, प्रेरणा और मनोरंजन के लिए **बुद्धिमान** एआई बॉट।</p>
-                        <button class="bot-info-button btn-ai" data-bot-id="askiangelbot">
-                            <i class="fas fa-info-circle"></i> 
-                            <span class="english-content">View Details</span>
-                            <span class="hindi-content">जानकारी देखें</span>
-                        </button>
-                    </div>
-                    
-                    <div class="btn-card" data-bot-id="LinkProviderRobot" data-bot-category="earning" data-bot-icon="fas fa-users" data-bot-color="#ffc107">
-                        <div class="btn-icon" style="color: #ffc107;">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <h3 class="btn-title english-content">Earning Bot</h3>
-                        <h3 class="btn-title hindi-content">कमाई बॉट</h3>
-                        <p class="btn-desc english-content">Earn money by inviting users to our movie groups. Simple process with regular payout system and user-friendly interface.</p>
-                        <p class="btn-desc hindi-content">लोगों को हमारे ग्रुप में जोड़कर **पैसे कमाएँ**। आसान प्रक्रिया और नियमित भुगतान प्रणाली।</p>
-                        <button class="bot-info-button btn-earn" data-bot-id="LinkProviderRobot">
-                            <i class="fas fa-info-circle"></i> 
-                            <span class="english-content">View Details</span>
-                            <span class="hindi-content">जानकारी देखें</span>
-                        </button>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="bot-info" style="padding-top: 50px;">
-                <a href="#" class="back-button" data-target="bots">
-                    <i class="fas fa-arrow-left"></i> 
-                    <span class="english-content">Back to Bots</span>
-                    <span class="hindi-content">बॉट्स पर वापस</span>
-                </a>
-                <div class="bot-info-card" id="dynamicBotInfo">
-                    </div>
-            </section>
-
-            <section id="groups">
-                <a href="#" class="back-button" data-target="home">
-                    <i class="fas fa-arrow-left"></i> 
-                    <span class="english-content">Back to Home</span>
-                    <span class="hindi-content">होम पर वापस</span>
-                </a>
-                <h2 class="section-title english-content">My Groups & Channels</h2>
-                <h2 class="section-title hindi-content">मेरे ग्रुप्स और चैनल</h2>
-                
-                <div class="button-grid">
-                    <div class="btn-card">
-                        <div class="btn-icon" style="color: #8e2de2;">
-                            <i class="fab fa-telegram"></i>
-                        </div>
-                        <h3 class="btn-title english-content">Main Channel</h3>
-                        <h3 class="btn-title hindi-content">मुख्य चैनल</h3>
-                        <p class="btn-desc english-content">Official channel for all updates, new bot releases, and important announcements from As Bhai Bsr.</p>
-                        <p class="btn-desc hindi-content">सभी अपडेट, नए बॉट और **जरूरी** घोषणाओं के लिए **आधिकारिक** चैनल।</p>
-                        <a href="https://t.me/Asbhai_bsr" class="btn-link btn-group" target="_blank">
-                            <i class="fas fa-external-link-alt"></i> Join Channel
-                        </a>
-                    </div>
-                    
-                    <div class="btn-card">
-                        <div class="btn-icon" style="color: #ff6b6b;">
-                            <i class="fas fa-film"></i>
-                        </div>
-                        <h3 class="btn-title english-content">Movie Search Group</h3>
-                        <h3 class="btn-title hindi-content">मूवी खोज ग्रुप</h3>
-                        <p class="btn-desc english-content">Largest collection of movies and web series with regular updates and dedicated support team.</p>
-                        <p class="btn-desc hindi-content">नियमित अपडेट और **समर्पित** सपोर्ट टीम के साथ फिल्मों और वेब सीरीज का **सबसे बड़ा** संग्रह।</p>
-                        <a href="https://t.me/all_movies_webseries_is_here" class="btn-link btn-movie" target="_blank">
-                            <i class="fas fa-external-link-alt"></i> Join Group
-                        </a>
-                    </div>
-                    
-                    <div class="btn-card">
-                        <div class="btn-icon" style="color: #ff6b6b;">
-                            <i class="fas fa-filter"></i>
-                        </div>
-                        <h3 class="btn-title english-content">AS Filter Group</h3>
-                        <h3 class="btn-title hindi-content">एएस फिल्टर ग्रुप</h3>
-                        <p class="btn-desc english-content">Advanced movie filtering and search group with categorized content and quality-focused collection.</p>
-                        <p class="btn-desc hindi-content">वर्गीकृत और **उच्च गुणवत्ता** वाली सामग्री के साथ उन्नत मूवी फिल्टरिंग और खोज समूह।</p>
-                        <a href="https://t.me/asfilter_group" class="btn-link btn-movie" target="_blank">
-                            <i class="fas fa-external-link-alt"></i> Join Group
-                        </a>
-                    </div>
-                    
-                    <div class="btn-card">
-                        <div class="btn-icon" style="color: #ff6b6b;">
-                            <i class="fas fa-comments"></i>
-                        </div>
-                        <h3 class="btn-title english-content">Movie Request Chat</h3>
-                        <h3 class="btn-title hindi-content">मूवी अनुरोध चैट</h3>
-                        <p class="btn-desc english-content">Interactive group for movie requests, discussions, and community interactions about entertainment.</p>
-                        <p class="btn-desc hindi-content">मूवी रिक्वेस्ट, बातचीत और मनोरंजन के बारे में **सामुदायिक** चर्चा के लिए इंटरैक्टिव ग्रुप।</p>
-                        <a href="https://t.me/asrequestchat" class="btn-link btn-movie" target="_blank">
-                            <i class="fas fa-external-link-alt"></i> Join Group
-                        </a>
-                    </div>
-                    
-                    <div class="btn-card">
-                        <div class="btn-icon" style="color: #ff6b6b;">
-                            <i class="fas fa-crown"></i>
-                        </div>
-                        <h3 class="btn-title english-content">Premium Channel</h3>
-                        <h3 class="btn-title hindi-content">प्रीमियम चैनल</h3>
-                        <p class="btn-desc english-content">Exclusive premium apps, modded applications, and special content for subscribed members only.</p>
-                        <p class="btn-desc hindi-content">केवल सब्सक्राइब किए गए सदस्यों के लिए **एक्सक्लूसिव** प्रीमियम ऐप्स और विशेष सामग्री।</p>
-                        <a href="https://t.me/aspremiumapps" class="btn-link btn-premium" target="_blank">
-                            <i class="fas fa-external-link-alt"></i> Join Channel
-                        </a>
-                    </div>
-                    
-                    <div class="btn-card">
-                        <div class="btn-icon" style="color: #ff6b6b;">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <h3 class="btn-title english-content">Premium Group</h3>
-                        <h3 class="btn-title hindi-content">प्रीमियम ग्रुप</h3>
-                        <p class="btn-desc english-content">Premium community for app discussions, support, and exclusive content sharing among members.</p>
-                        <p class="btn-desc hindi-content">ऐप चर्चाओं, समर्थन और सदस्यों के बीच **एक्सक्लूसिव** सामग्री साझा करने के लिए प्रीमियम समुदाय।</p>
-                        <a href="https://t.me/aspremiumeappgroup" class="btn-link btn-premium" target="_blank">
-                            <i class="fas fa-external-link-alt"></i> Join Group
-                        </a>
-                    </div>
-                    
-                    <div class="btn-card">
-                        <div class="btn-icon" style="color: #ff0000;">
-                            <i class="fab fa-youtube"></i>
-                        </div>
-                        <h3 class="btn-title english-content">YouTube Channel</h3>
-                        <h3 class="btn-title hindi-content">यूट्यूब चैनल</h3>
-                        <p class="btn-desc english-content">Video content, tutorials, and entertainment on our official YouTube channel with regular uploads.</p>
-                        <p class="btn-desc hindi-content">नियमित अपलोड के साथ हमारे **आधिकारिक** YouTube चैनल पर वीडियो सामग्री और ट्यूटोरियल।</p>
-                        <a href="https://youtube.com/@asbhaibsr?si=PD50RLuxWISAs833" class="btn-link btn-youtube" target="_blank">
-                            <i class="fas fa-external-link-alt"></i> Visit Channel
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <section id="contact">
-                <a href="#" class="back-button" data-target="home">
-                    <i class="fas fa-arrow-left"></i> 
-                    <span class="english-content">Back to Home</span>
-                    <span class="hindi-content">होम पर वापस</span>
-                </a>
-                <h2 class="section-title english-content">Contact & Support</h2>
-                <h2 class="section-title hindi-content">संपर्क और सहायता</h2>
-                
-                <div class="button-grid">
-                    <div class="btn-card">
-                        <div class="btn-icon" style="color: #17a2b8;">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h3 class="btn-title english-content">Direct Contact</h3>
-                        <h3 class="btn-title hindi-content">सीधा संपर्क</h3>
-                        <p class="btn-desc english-content">Get in touch with me directly on Telegram for queries, collaborations, or custom bot development.</p>
-                        <p class="btn-desc hindi-content">प्रश्नों, सहयोग, या कस्टम बॉट के लिए टेलीग्राम पर **सीधे** मुझसे संपर्क करें।</p>
-                        <a href="https://t.me/asbhaibsr" class="btn-link btn-contact" target="_blank">
-                            <i class="fas fa-external-link-alt"></i> @asbhaibsr
-                        </a>
-                    </div>
-                    
-                    <div class="btn-card">
-                        <div class="btn-icon" style="color: #17a2b8;">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <h3 class="btn-title english-content">Support Group</h3>
-                        <h3 class="btn-title hindi-content">सहायता समूह</h3>
-                        <p class="btn-desc english-content">Join our support group for technical assistance, bug reports, and community help with our services.</p>
-                        <p class="btn-desc hindi-content">तकनीकी सहायता, बग रिपोर्ट और हमारे सेवाओं के लिए **सामुदायिक** सहायता समूह से जुड़ें।</p>
-                        <a href="https://t.me/aschat_group" class="btn-link btn-contact" target="_blank">
-                            <i class="fas fa-external-link-alt"></i> @aschat_group
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <footer>
-                <div class="social-links">
-                    <a href="https://t.me/Asbhai_bsr"><i class="fab fa-telegram"></i></a>
-                    <a href="https://youtube.com/@asbhaibsr?si=PD50RLuxWISAs833"><i class="fab fa-youtube"></i></a>
-                    <a href="https://t.me/asbhaibsr"><i class="fas fa-robot"></i></a>
-                </div>
-                <p class="english-content">&copy; As Bhai Bsr. All rights reserved.</p>
-                <p class="hindi-content">&copy; **आस भाई बीएसआर**. सर्वाधिकार सुरक्षित।</p>
-                <p class="english-content">Designed with <i class="fas fa-heart" style="color: var(--accent);"></i> for Telegram Community</p>
-                <p class="hindi-content">टेलीग्राम समुदाय के लिए <i class="fas fa-heart" style="color: var(--accent);"></i> के साथ **प्यार से** डिज़ाइन किया गया।</p>
-            </footer>
+            </div>
         </div>
-    </div>
 
-    <div id="kingAnimation" class="king-animation" style="display: none;">
-        <i class="fas fa-crown king-icon"></i>
-        <h1 class="king-text english-content">Welcome King!</h1>
-        <h1 class="king-text hindi-content">👑 स्वागत है राजा! 👑</h1>
-        <p class="king-subtext english-content">You've discovered the special animation! As Bhai Bsr welcomes you to explore all the amazing bots and services available.</p>
-        <p class="king-subtext hindi-content">आपने यह **विशेष** एनिमेशन खोज लिया है! आस भाई बीएसआर आपका स्वागत करता है और सभी अद्भुत बॉट्स और सेवाओं को **देखने के लिए** आमंत्रित करता है।</p>
-    </div>
+        <!-- Bots Section -->
+        <div class="section-title">
+            <div class="title-icon"><i class="fas fa-robot"></i></div>
+            <div class="title-text">PREMIUM BOTS <small>✦ 6 active bots</small></div>
+        </div>
 
-    <canvas id="confetti-canvas" style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9998; display:none;"></canvas>
-
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script>
-        // Bot Data for Dynamic Pages
-        const botData = {
-            'asfilter_bot': {
-                name_en: 'Movie Search Bot',
-                name_hi: 'मूवी खोज बॉट',
-                desc_en: 'This bot provides an **advanced movie search** facility with a constantly updated, **vast database**. Users can search using multiple filters like year, genre, and quality. It is highly efficient for quick file fetching.',
-                desc_hi: 'यह बॉट लगातार अपडेट होने वाले **विशाल डेटाबेस** के साथ **बेहतरीन मूवी खोज** की सुविधा देता है। उपयोगकर्ता साल, शैली और गुणवत्ता जैसे कई फिल्टर का उपयोग करके सर्च कर सकते हैं। यह **तेज** फाइल खोजने के लिए बहुत ही **अच्छा** है।',
-                features_en: ['Vast Movie Database', 'Multi-Filter Search', 'Fast Response Time', 'Direct Download Links'],
-                features_hi: ['विशाल मूवी डेटाबेस', 'मल्टी-फिल्टर सर्च', 'तेज प्रतिक्रिया समय', 'सीधे डाउनलोड लिंक'],
-                link: 'https://t.me/asfilter_bot',
-                link_text: '@asfilter_bot',
-                icon: 'fas fa-film',
-                color: 'bg-movie'
-            },
-            'AsMoviesSearch_roBot': {
-                name_en: 'Movie Search Bot Pro',
-                name_hi: 'मूवी खोज बॉट प्रो',
-                desc_en: 'The **Premium** version offers an **ad-free, exclusive experience**. It features faster search results, priority support, and access to a wider range of exclusive, high-quality content not available in the free version.',
-                desc_hi: '**प्रीमियम** वर्जन **विज्ञापन-मुक्त** और **एक्सक्लूसिव अनुभव** प्रदान करता है। इसमें **तेज सर्च**, प्राथमिकता सहायता, और एक्सक्लूसिव, **उच्च गुणवत्ता** वाली सामग्री तक पहुंच मिलती है जो फ्री वर्जन में उपलब्ध नहीं है।',
-                features_en: ['Ad-Free Experience', 'Exclusive Content Access', 'Priority Support', 'Lightning Fast Search'],
-                features_hi: ['विज्ञापन-मुक्त अनुभव', 'एक्सक्लूसिव कंटेंट एक्सेस', 'प्राथमिकता सहायता', 'बेहद तेज सर्च'],
-                link: 'https://t.me/AsMoviesSearch_roBot',
-                link_text: '@AsMoviesSearch_roBot',
-                icon: 'fas fa-video',
-                color: 'bg-movie'
-            },
-            'AsfreefilterBot': {
-                name_en: 'Free Movie Search Bot',
-                name_hi: 'मुफ्त मूवी खोज बॉट',
-                desc_en: 'A fully **free-to-use** bot providing essential movie search features. It is perfect for casual users who need reliable basic search functionality without any cost.',
-                desc_hi: '**पूरी तरह से मुफ्त** उपयोग करने वाला बॉट जो मूवी खोजने की **जरूरी** सुविधाएँ प्रदान करता है। यह उन उपयोगकर्ताओं के लिए **आदर्श** है जिन्हें बिना किसी लागत के विश्वसनीय बेसिक सर्च चाहिए।',
-                features_en: ['100% Free to Use', 'Basic Movie Search', 'Regular Database Updates', 'Simple Interface'],
-                features_hi: ['उपयोग के लिए 100% मुफ्त', 'बुनियादी मूवी सर्च', 'नियमित डेटाबेस अपडेट', 'सरल इंटरफेस'],
-                link: 'https://t.me/AsfreefilterBot',
-                link_text: '@AsfreefilterBot',
-                icon: 'fas fa-download',
-                color: 'bg-free'
-            },
-            'askiangelbot': {
-                name_en: 'AI Chat Assistant',
-                name_hi: 'एआई चैट सहायक',
-                desc_en: 'An intelligent AI bot designed for **natural conversations**, study assistance, and motivational support. It can be integrated into group chats for engaging and helpful interactions.',
-                desc_hi: 'बातचीत, पढ़ाई में मदद और **प्रेरणा** के लिए डिज़ाइन किया गया **बुद्धिमान एआई बॉट**। इसे ग्रुप चैट में जोड़ा जा सकता है ताकि बातचीत **आकर्षक** और **मददगार** हो सके।',
-                features_en: ['Natural Language Processing', 'Study/Homework Help', 'Motivational Quotes', 'Group Chat Integration'],
-                features_hi: ['प्राकृतिक भाषा समझ', 'पढ़ाई/होमवर्क में मदद', 'प्रेरणादायक कोट्स', 'ग्रुप चैट में इंटीग्रेशन'],
-                link: 'https://t.me/askiangelbot',
-                link_text: '@askiangelbot',
-                icon: 'fas fa-robot',
-                color: 'bg-ai'
-            },
-            'LinkProviderRobot': {
-                name_en: 'Earning Bot',
-                name_hi: 'कमाई बॉट',
-                desc_en: 'A unique bot that allows users to **earn money** by promoting our movie groups. It features a simple invitation process and a transparent, regular payout system.',
-                desc_hi: 'एक खास बॉट जो उपयोगकर्ताओं को हमारे मूवी ग्रुप्स को **प्रमोट करके पैसे कमाने** की अनुमति देता है। इसमें एक सरल आमंत्रण प्रक्रिया और एक पारदर्शी, **नियमित भुगतान** प्रणाली है।',
-                features_en: ['Earn Money Online', 'Simple Invitation Process', 'Regular Payouts', 'Track Your Earnings'],
-                features_hi: ['ऑनलाइन पैसे कमाएँ', 'सरल आमंत्रण प्रक्रिया', 'नियमित भुगतान', 'अपनी कमाई ट्रैक करें'],
-                link: 'https://t.me/LinkProviderRobot',
-                link_text: '@LinkProviderRobot',
-                icon: 'fas fa-users',
-                color: 'bg-earn'
-            }
-        };
-
-        // Section order for navigation
-        const sectionOrder = ['home', 'about', 'bots', 'groups', 'contact', 'bot-info'];
-
-        // --- Functions from Original Script ---
-
-        // Loading Screen
-        document.addEventListener('DOMContentLoaded', function() {
-            const loadingScreen = document.getElementById('loadingScreen');
-            const progressBar = document.querySelector('.progress');
-            const percentage = document.querySelector('.loader-percentage');
-            
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += Math.random() * 15;
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        loadingScreen.style.opacity = '0';
-                        setTimeout(() => {
-                            loadingScreen.style.display = 'none';
-                        }, 500);
-                    }, 500);
-                }
-                progressBar.style.width = progress + '%';
-                percentage.textContent = Math.round(progress) + '%';
-            }, 200);
-            
-            // Initializing bot info buttons even if language is not selected yet
-            document.querySelectorAll('.bot-info-button').forEach(button => {
-                button.addEventListener('click', handleBotInfoClick);
-            });
-        });
-
-        // Language Selection
-        document.getElementById('hindiBtn').addEventListener('click', function() {
-            startWebsite('hindi');
-        });
-
-        document.getElementById('englishBtn').addEventListener('click', function() {
-            startWebsite('english');
-        });
-
-        function startWebsite(language) {
-            document.getElementById('languageScreen').style.display = 'none';
-            document.getElementById('mainWebsite').classList.add('active');
-            
-            // Set language attribute
-            document.body.setAttribute('data-lang', language);
-            
-            // Initialize all features
-            initializeParticles();
-            initializeCustomCursor();
-            initializeThemeToggle();
-            initializeTestimonials();
-            initializeStatsCounter();
-            initializeNavigation();
-            initializeMobileMenu();
-            initializeDesktopCornerButton();
-            initializeListModeToggle();
-            initializePageNavigation();
-            
-            // Show confetti
-            showConfetti();
-        }
-
-        // Theme Toggle
-        function initializeThemeToggle() {
-            const themeToggle = document.getElementById('themeToggle');
-            const themeIcon = themeToggle.querySelector('i');
-            
-            themeToggle.addEventListener('click', function() {
-                const currentTheme = document.body.getAttribute('data-theme');
-                if (currentTheme === 'light') {
-                    document.body.setAttribute('data-theme', 'dark');
-                    themeIcon.classList.remove('fa-sun');
-                    themeIcon.classList.add('fa-moon');
-                } else {
-                    document.body.setAttribute('data-theme', 'light');
-                    themeIcon.classList.remove('fa-moon');
-                    themeIcon.classList.add('fa-sun');
-                }
-            });
-        }
-
-        // Desktop Corner Button
-        function initializeDesktopCornerButton() {
-            const desktopCornerBtn = document.getElementById('desktopCornerBtn');
-            
-            desktopCornerBtn.addEventListener('click', function() {
-                // Show loading screen
-                showLoadingScreen();
-                
-                // After loading, show king animation
-                setTimeout(() => {
-                    hideLoadingScreen();
-                    document.getElementById('kingAnimation').style.display = 'flex';
-                    showConfetti();
-                    
-                    // Hide animation after 4 seconds
-                    setTimeout(() => {
-                        document.getElementById('kingAnimation').style.display = 'none';
-                    }, 4000);
-                }, 1500);
-            });
-        }
-
-        // List Mode Toggle
-        function initializeListModeToggle() {
-            const listModeToggle = document.getElementById('listModeToggle');
-            const listModeIcon = listModeToggle.querySelector('i');
-            
-            listModeToggle.addEventListener('click', function() {
-                document.body.classList.toggle('list-mode');
-                
-                if (document.body.classList.contains('list-mode')) {
-                    listModeIcon.classList.remove('fa-list');
-                    listModeIcon.classList.add('fa-th-large');
-                } else {
-                    listModeIcon.classList.remove('fa-th-large');
-                    listModeIcon.classList.add('fa-list');
-                }
-            });
-        }
-
-        // Page Navigation
-        function initializePageNavigation() {
-            const prevPageBtn = document.getElementById('prevPageBtn');
-            const nextPageBtn = document.getElementById('nextPageBtn');
-            
-            prevPageBtn.addEventListener('click', navigateToPreviousSection);
-            nextPageBtn.addEventListener('click', navigateToNextSection);
-        }
-
-        function navigateToPreviousSection() {
-            const currentSection = document.querySelector('section.active');
-            const currentSectionId = currentSection.id;
-            const currentIndex = sectionOrder.indexOf(currentSectionId);
-            
-            if (currentIndex > 0) {
-                navigateToSection(sectionOrder[currentIndex - 1]);
-            }
-        }
-
-        function navigateToNextSection() {
-            const currentSection = document.querySelector('section.active');
-            const currentSectionId = currentSection.id;
-            const currentIndex = sectionOrder.indexOf(currentSectionId);
-            
-            if (currentIndex < sectionOrder.length - 1) {
-                navigateToSection(sectionOrder[currentIndex + 1]);
-            }
-        }
-
-        // Loading Screen Functions
-        function showLoadingScreen() {
-            const loadingScreen = document.getElementById('loadingScreen');
-            const progressBar = document.querySelector('.progress');
-            const percentage = document.querySelector('.loader-percentage');
-            
-            loadingScreen.style.display = 'flex';
-            loadingScreen.style.opacity = '1';
-            
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += Math.random() * 20;
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(interval);
-                }
-                progressBar.style.width = progress + '%';
-                percentage.textContent = Math.round(progress) + '%';
-            }, 100);
-        }
-
-        function hideLoadingScreen() {
-            const loadingScreen = document.getElementById('loadingScreen');
-            loadingScreen.style.opacity = '0';
-            setTimeout(() => {
-                loadingScreen.style.display = 'none';
-            }, 500);
-        }
-
-        // Custom Cursor (Only the necessary part for initialization)
-        function initializeCustomCursor() {
-            const cursor = document.querySelector('.custom-cursor');
-            const cursorDot = document.querySelector('.cursor-dot');
-            
-            document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-                
-                cursorDot.style.left = e.clientX + 'px';
-                cursorDot.style.top = e.clientY + 'px';
-            });
-            
-            // Cursor effects on interactive elements
-            const interactiveElements = document.querySelectorAll('a, button, .btn-card, .main-button, .bot-info-button');
-            
-            interactiveElements.forEach(element => {
-                element.addEventListener('mouseenter', () => {
-                    cursor.classList.add('hover');
-                    cursorDot.style.transform = 'scale(2)';
-                });
-                
-                element.addEventListener('mouseleave', () => {
-                    cursor.classList.remove('hover');
-                    cursorDot.style.transform = 'scale(1)';
-                });
-            });
-        }
-
-        // Particles Background
-        function initializeParticles() {
-            particlesJS('particles-js', {
-                particles: {
-                    number: { value: 100, density: { enable: true, value_area: 800 } },
-                    color: { value: ["#ff6b6b", "#4a00e0", "#8e2de2", "#ffd700"] },
-                    shape: { type: "circle" },
-                    opacity: { value: 0.5, random: true },
-                    size: { value: 3, random: true },
-                    line_linked: {
-                        enable: true,
-                        distance: 150,
-                        color: "#ffffff",
-                        opacity: 0.4,
-                        width: 1
-                    },
-                    move: {
-                        enable: true,
-                        speed: 2,
-                        direction: "none",
-                        random: true,
-                        straight: false,
-                        out_mode: "out",
-                        bounce: false
-                    }
-                },
-                interactivity: {
-                    detect_on: "canvas",
-                    events: {
-                        onhover: { enable: true, mode: "repulse" },
-                        onclick: { enable: true, mode: "push" },
-                        resize: true
-                    }
-                },
-                retina_detect: true
-            });
-        }
-
-        // Testimonials Slider
-        function initializeTestimonials() {
-            const testimonials = document.querySelectorAll('.testimonial');
-            let currentTestimonial = 0;
-            
-            function showNextTestimonial() {
-                testimonials.forEach(t => t.classList.remove('active'));
-                testimonials[currentTestimonial].classList.add('active');
-                currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-            }
-            
-            setInterval(showNextTestimonial, 5000);
-            showNextTestimonial(); // Initial call
-        }
-
-        // Stats Counter
-        function initializeStatsCounter() {
-            const statNumbers = document.querySelectorAll('.stat-number');
-            
-            statNumbers.forEach(stat => {
-                const target = parseInt(stat.getAttribute('data-count'));
-                const duration = 2000;
-                const step = target / (duration / 16);
-                let current = 0;
-                
-                const timer = setInterval(() => {
-                    current += step;
-                    if (current >= target) {
-                        current = target;
-                        clearInterval(timer);
-                    }
-                    stat.textContent = Math.round(current).toLocaleString();
-                }, 16);
-            });
-        }
-        
-        // Navigation functionality
-        function initializeNavigation() {
-            document.querySelectorAll('nav a, .back-button, .btn-link[data-target], .btn-card[data-target]').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    const targetId = this.getAttribute('data-target');
-                    if (targetId) {
-                        e.preventDefault();
-                        
-                        // Show loading screen for navigation
-                        showLoadingScreen();
-                        
-                        setTimeout(() => {
-                            navigateToSection(targetId);
-                            hideLoadingScreen();
-                            
-                            // Close mobile menu if open
-                            const nav = document.getElementById('mainNav');
-                            const menuToggle = document.getElementById('menuToggle').querySelector('i');
-                            if (nav.classList.contains('open')) {
-                                nav.classList.remove('open');
-                                menuToggle.classList.remove('fa-times');
-                                menuToggle.classList.add('fa-bars');
-                            }
-                        }, 1000);
-                    }
-                });
-            });
-        }
-
-        function navigateToSection(targetId) {
-            // Update active nav link
-            document.querySelectorAll('nav a').forEach(navLink => {
-                navLink.classList.remove('active');
-            });
-            document.querySelectorAll(`nav a[data-target="${targetId}"]`).forEach(navLink => {
-                navLink.classList.add('active');
-            });
-            
-            // Hide all sections
-            document.querySelectorAll('section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Show target section
-            document.getElementById(targetId).classList.add('active');
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
-        }
-
-        // Mobile Menu Toggle
-        function initializeMobileMenu() {
-            const menuToggle = document.getElementById('menuToggle');
-            const nav = document.getElementById('mainNav');
-            const menuIcon = menuToggle.querySelector('i');
-
-            menuToggle.addEventListener('click', function() {
-                nav.classList.toggle('open');
-                if (nav.classList.contains('open')) {
-                    menuIcon.classList.remove('fa-bars');
-                    menuIcon.classList.add('fa-times');
-                } else {
-                    menuIcon.classList.remove('fa-times');
-                    menuIcon.classList.add('fa-bars');
-                }
-            });
-        }
-
-        // King Animation for About Me Button
-        document.getElementById('aboutMeBtn').addEventListener('click', function() {
-            // Show loading screen
-            showLoadingScreen();
-            
-            setTimeout(() => {
-                hideLoadingScreen();
-                
-                // Show king animation
-                document.getElementById('kingAnimation').style.display = 'flex';
-                showConfetti();
-                
-                // Hide animation after 4 seconds and show about section
-                setTimeout(() => {
-                    document.getElementById('kingAnimation').style.display = 'none';
-                    
-                    navigateToSection('about');
-                }, 4000);
-            }, 1500);
-        });
-
-        // Confetti Function
-        function showConfetti() {
-            const canvas = document.getElementById('confetti-canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            canvas.style.display = 'block';
-
-            const confettiPieces = [];
-            const colors = ['#ff6b6b', '#4a00e0', '#8e2de2', '#ffd700', '#ffffff'];
-
-            // Create confetti pieces
-            for (let i = 0; i < 150; i++) {
-                confettiPieces.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height - canvas.height,
-                    size: Math.random() * 10 + 5,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    speed: Math.random() * 3 + 2,
-                    rotation: Math.random() * 360,
-                    rotationSpeed: Math.random() * 10 - 5
-                });
-            }
-
-            let animationFrameId;
-            let duration = 3000; // 3 seconds
-            let startTime = performance.now();
-
-            function animateConfetti(currentTime) {
-                const elapsedTime = currentTime - startTime;
-                
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                let activePieces = 0;
-                
-                confettiPieces.forEach(piece => {
-                    piece.y += piece.speed;
-                    piece.x += Math.sin(piece.y * 0.01) * 1;
-                    piece.rotation += piece.rotationSpeed;
-                    
-                    ctx.save();
-                    ctx.translate(piece.x, piece.y);
-                    ctx.rotate(piece.rotation * Math.PI / 180);
-                    ctx.fillStyle = piece.color;
-                    ctx.fillRect(-piece.size / 2, -piece.size / 2, piece.size, piece.size);
-                    ctx.restore();
-                    
-                    if (piece.y < canvas.height || elapsedTime < duration) {
-                        activePieces++;
-                    }
-                });
-                
-                if (elapsedTime < duration || activePieces > 0) {
-                    animationFrameId = requestAnimationFrame(animateConfetti);
-                } else {
-                    cancelAnimationFrame(animationFrameId);
-                    canvas.style.display = 'none';
-                }
-            }
-            
-            if (animationFrameId) {
-                cancelAnimationFrame(animationFrameId);
-            }
-            animateConfetti(startTime);
-        }
-        
-        // --- NEW FEATURES ---
-
-        // Dynamic Bot Info Page Handler
-        function handleBotInfoClick(e) {
-            e.preventDefault();
-            
-            // Show loading screen
-            showLoadingScreen();
-            
-            setTimeout(() => {
-                const botId = this.getAttribute('data-bot-id');
-                renderBotInfo(botId);
-                navigateToSection('bot-info');
-                hideLoadingScreen();
-            }, 1000);
-        }
-        
-        // Bot Info Renderer
-        function renderBotInfo(botId) {
-            const data = botData[botId];
-            if (!data) return;
-
-            const isHindi = document.body.getAttribute('data-lang') === 'hindi';
-            const botName = isHindi ? data.name_hi : data.name_en;
-            const botDesc = isHindi ? data.desc_hi : data.desc_en;
-            const featuresList = isHindi ? data.features_hi : data.features_en;
-            const joinText = isHindi ? 'बॉटे से जुड़ें' : 'Start The Bot';
-
-            const featuresHtml = featuresList.map(feature => 
-                `<li><i class="fas fa-check-circle"></i> ${feature}</li>`
-            ).join('');
-
-            const htmlContent = `
-                <div class="bot-header">
-                    <div class="bot-image ${data.color}">
-                        <i class="${data.icon}"></i>
-                        <span>${data.link_text}</span>
-                    </div>
-                    <h1 class="bot-name">${botName}</h1>
-                </div>
-                
-                <div class="bot-details">
-                    <h3 class="section-title english-content" style="margin-bottom: 20px;">Bot Description</h3>
-                    <h3 class="section-title hindi-content" style="margin-bottom: 20px;">बॉट की जानकारी</h3>
-                    <p>${botDesc}</p>
-                </div>
-                
+        <div class="bot-grid">
+            <!-- Bot 1 - AS Filter -->
+            <div class="bot-card">
+                <div class="bot-image bot-img-1"></div>
+                <span class="bot-category"><i class="fas fa-film"></i> MOVIE BOT</span>
+                <h3 class="bot-name">AS Filter</h3>
+                <p class="bot-description">Advanced movie search with vast database, multi-filter options, and instant download links.</p>
                 <div class="bot-features">
-                    <h3 class="section-title english-content" style="margin-bottom: 20px;">Key Features</h3>
-                    <h3 class="section-title hindi-content" style="margin-bottom: 20px;">मुख्य विशेषताएँ</h3>
-                    <ul>
-                        ${featuresHtml}
-                    </ul>
+                    <span class="feature-tag">4K Movies</span>
+                    <span class="feature-tag">Fast Search</span>
+                    <span class="feature-tag">Direct Links</span>
                 </div>
-                
-                <div class="bot-action-buttons">
-                    <a href="${data.link}" class="btn-link btn-group" target="_blank">
-                        <i class="fab fa-telegram-plane"></i> ${joinText}
-                    </a>
-                    <a href="https://t.me/asbhaibsr" class="btn-link btn-contact" target="_blank">
-                        <i class="fas fa-headset"></i> ${isHindi ? 'समर्थन' : 'Support'}
-                    </a>
+                <div class="bot-actions">
+                    <a href="https://t.me/asfilter_bot" class="btn-telegram" target="_blank"><i class="fab fa-telegram"></i> OPEN BOT</a>
+                    <button class="btn-details info-btn" data-bot="asfilter"><i class="fas fa-info-circle"></i> DETAILS</button>
                 </div>
-            `;
-            
-            document.getElementById('dynamicBotInfo').innerHTML = htmlContent;
-        }
+            </div>
 
-        // Add interactive animations to cards (Re-initialised for new cards)
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.btn-card');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    // Only apply hover transform if it's not a bot info button click
-                    if (!card.querySelector('.bot-info-button')) {
-                        this.style.transform = 'translateY(-15px) rotateX(5deg) scale(1.02)';
+            <!-- Bot 2 - Movie Pro -->
+            <div class="bot-card">
+                <div class="bot-image bot-img-2"></div>
+                <span class="bot-category"><i class="fas fa-crown"></i> PREMIUM</span>
+                <h3 class="bot-name">Movie Pro</h3>
+                <p class="bot-description">Ad-free experience with exclusive 4K content, priority support, and early access.</p>
+                <div class="bot-features">
+                    <span class="feature-tag">No Ads</span>
+                    <span class="feature-tag">Exclusive</span>
+                    <span class="feature-tag">4K HDR</span>
+                </div>
+                <div class="bot-actions">
+                    <a href="https://t.me/AsMoviesSearch_roBot" class="btn-telegram" target="_blank"><i class="fab fa-telegram"></i> OPEN BOT</a>
+                    <button class="btn-details info-btn" data-bot="aspro"><i class="fas fa-info-circle"></i> DETAILS</button>
+                </div>
+            </div>
+
+            <!-- Bot 3 - Free Movie -->
+            <div class="bot-card">
+                <div class="bot-image bot-img-3"></div>
+                <span class="bot-category"><i class="fas fa-download"></i> FREE</span>
+                <h3 class="bot-name">Free Movie</h3>
+                <p class="bot-description">100% free movie search with regular updates and simple interface.</p>
+                <div class="bot-features">
+                    <span class="feature-tag">Totally Free</span>
+                    <span class="feature-tag">Daily Updates</span>
+                    <span class="feature-tag">Easy UI</span>
+                </div>
+                <div class="bot-actions">
+                    <a href="https://t.me/AsfreefilterBot" class="btn-telegram" target="_blank"><i class="fab fa-telegram"></i> OPEN BOT</a>
+                    <button class="btn-details info-btn" data-bot="free"><i class="fas fa-info-circle"></i> DETAILS</button>
+                </div>
+            </div>
+
+            <!-- Bot 4 - Angel AI -->
+            <div class="bot-card">
+                <div class="bot-image bot-img-4"></div>
+                <span class="bot-category"><i class="fas fa-brain"></i> AI HELPER</span>
+                <h3 class="bot-name">Angel AI</h3>
+                <p class="bot-description">Intelligent assistant for study help, motivation, and group engagement.</p>
+                <div class="bot-features">
+                    <span class="feature-tag">Study Help</span>
+                    <span class="feature-tag">Motivation</span>
+                    <span class="feature-tag">24/7 Active</span>
+                </div>
+                <div class="bot-actions">
+                    <a href="https://t.me/askiangelbot" class="btn-telegram" target="_blank"><i class="fab fa-telegram"></i> OPEN BOT</a>
+                    <button class="btn-details info-btn" data-bot="angel"><i class="fas fa-info-circle"></i> DETAILS</button>
+                </div>
+            </div>
+
+            <!-- Bot 5 - Earn Bot -->
+            <div class="bot-card">
+                <div class="bot-image bot-img-5"></div>
+                <span class="bot-category"><i class="fas fa-coins"></i> EARNING</span>
+                <h3 class="bot-name">Earn Bot</h3>
+                <p class="bot-description">Invite users and earn real money with regular payouts and dashboard.</p>
+                <div class="bot-features">
+                    <span class="feature-tag">Real Money</span>
+                    <span class="feature-tag">Instant Payout</span>
+                    <span class="feature-tag">Track Earnings</span>
+                </div>
+                <div class="bot-actions">
+                    <a href="https://t.me/LinkProviderRobot" class="btn-telegram" target="_blank"><i class="fab fa-telegram"></i> OPEN BOT</a>
+                    <button class="btn-details info-btn" data-bot="earn"><i class="fas fa-info-circle"></i> DETAILS</button>
+                </div>
+            </div>
+
+            <!-- Bot 6 - YouTube -->
+            <div class="bot-card">
+                <div class="bot-image bot-img-6"></div>
+                <span class="bot-category"><i class="fab fa-youtube"></i> CHANNEL</span>
+                <h3 class="bot-name">As Bhai YT</h3>
+                <p class="bot-description">Tutorials, updates, and entertainment content on YouTube.</p>
+                <div class="bot-features">
+                    <span class="feature-tag">Tutorials</span>
+                    <span class="feature-tag">Updates</span>
+                    <span class="feature-tag">Entertainment</span>
+                </div>
+                <div class="bot-actions">
+                    <a href="https://youtube.com/@asbhaibsr" class="btn-telegram" target="_blank"><i class="fab fa-youtube"></i> SUBSCRIBE</a>
+                    <a href="#" class="btn-details"><i class="fas fa-external-link"></i> VISIT</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Groups Section -->
+        <div class="section-title">
+            <div class="title-icon"><i class="fas fa-users"></i></div>
+            <div class="title-text">COMMUNITY <small>✦ join 7+ groups</small></div>
+        </div>
+
+        <div class="groups-grid">
+            <a href="https://t.me/Asbhai_bsr" class="group-card" target="_blank">
+                <div class="group-icon"><i class="fab fa-telegram"></i></div>
+                <div class="group-info">
+                    <h4>Main Channel</h4>
+                    <p>Official updates & news</p>
+                </div>
+            </a>
+            <a href="https://t.me/all_movies_webseries_is_here" class="group-card" target="_blank">
+                <div class="group-icon"><i class="fas fa-film"></i></div>
+                <div class="group-info">
+                    <h4>Movie Group</h4>
+                    <p>Largest movie collection</p>
+                </div>
+            </a>
+            <a href="https://t.me/asfilter_group" class="group-card" target="_blank">
+                <div class="group-icon"><i class="fas fa-filter"></i></div>
+                <div class="group-info">
+                    <h4>AS Filter Group</h4>
+                    <p>Advanced filtering</p>
+                </div>
+            </a>
+            <a href="https://t.me/asrequestchat" class="group-card" target="_blank">
+                <div class="group-icon"><i class="fas fa-comments"></i></div>
+                <div class="group-info">
+                    <h4>Request Chat</h4>
+                    <p>Movie requests</p>
+                </div>
+            </a>
+            <a href="https://t.me/aspremiumapps" class="group-card" target="_blank">
+                <div class="group-icon"><i class="fas fa-crown"></i></div>
+                <div class="group-info">
+                    <h4>Premium Channel</h4>
+                    <p>Exclusive apps</p>
+                </div>
+            </a>
+            <a href="https://t.me/aspremiumeappgroup" class="group-card" target="_blank">
+                <div class="group-icon"><i class="fas fa-star"></i></div>
+                <div class="group-info">
+                    <h4>Premium Group</h4>
+                    <p>Elite community</p>
+                </div>
+            </a>
+            <a href="https://t.me/aschat_group" class="group-card" target="_blank">
+                <div class="group-icon"><i class="fas fa-headset"></i></div>
+                <div class="group-info">
+                    <h4>Support Group</h4>
+                    <p>24/7 assistance</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <div class="stat-block">
+                <div class="stat-value">55K+</div>
+                <div class="stat-label">Happy Users</div>
+            </div>
+            <div class="stat-block">
+                <div class="stat-value">18+</div>
+                <div class="stat-label">Active Bots</div>
+            </div>
+            <div class="stat-block">
+                <div class="stat-value">5K+</div>
+                <div class="stat-label">Daily Requests</div>
+            </div>
+            <div class="stat-block">
+                <div class="stat-value">24/7</div>
+                <div class="stat-label">Support</div>
+            </div>
+        </div>
+
+        <!-- Info Panel -->
+        <div id="infoPanel" class="info-panel">
+            <div id="infoContent"></div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div>© 2024 As Bhai Bsr. All rights reserved.</div>
+            <div class="social-links">
+                <a href="https://t.me/Asbhai_bsr" class="social-link" target="_blank"><i class="fab fa-telegram"></i></a>
+                <a href="https://youtube.com/@asbhaibsr" class="social-link" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://t.me/asbhaibsr" class="social-link" target="_blank"><i class="fas fa-robot"></i></a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- King Overlay -->
+    <div id="kingOverlay" class="king-overlay">
+        <i class="fas fa-crown king-icon"></i>
+        <h2 class="king-text">WELCOME KING!</h2>
+        <p style="color: gold; font-size: 1.5rem;">As Bhai Bsr welcomes you</p>
+        <button class="btn-dismiss" id="closeKing">ENTER THE KINGDOM</button>
+    </div>
+
+    <script>
+        (function() {
+            // Bot details database
+            const botDetails = {
+                asfilter: {
+                    name: 'AS FILTER BOT',
+                    avatar: 'bot-img-1',
+                    description: '🚀 Advanced movie search bot with massive database. Features include: multi-filter search by year, genre, quality; instant download links; regular updates with latest movies; user-friendly interface; 24/7 availability. Perfect for movie enthusiasts who want quick access to their favorite films.'
+                },
+                aspro: {
+                    name: 'MOVIE PRO',
+                    avatar: 'bot-img-2',
+                    description: '💎 Premium movie experience with exclusive benefits: completely ad-free interface; access to 4K HDR content; priority support with faster responses; early access to new releases; exclusive WEB-DL and Blu-ray links; personalized recommendations; VIP community access.'
+                },
+                free: {
+                    name: 'FREE MOVIE BOT',
+                    avatar: 'bot-img-3',
+                    description: '🎁 100% free movie search service: no hidden costs; basic but effective filters; daily updated database; simple and intuitive interface; support for multiple languages; works in all Telegram apps; perfect for casual movie watchers.'
+                },
+                angel: {
+                    name: 'ANGEL AI',
+                    avatar: 'bot-img-4',
+                    description: '🤖 Intelligent AI assistant: helps with homework and studies; provides motivational quotes; engages in group chats; learns from interactions; 24/7 availability; multiple conversation modes; supports both Hindi and English.'
+                },
+                earn: {
+                    name: 'EARN BOT',
+                    avatar: 'bot-img-5',
+                    description: '💰 Real money earning bot: invite users to groups; track your earnings in real-time; weekly payouts via multiple methods; referral dashboard; bonus programs; activity rewards; transparent payment system.'
+                }
+            };
+
+            const infoPanel = document.getElementById('infoPanel');
+            const infoContent = document.getElementById('infoContent');
+            
+            // Info buttons
+            document.querySelectorAll('.info-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const botKey = this.dataset.bot;
+                    const data = botDetails[botKey];
+                    
+                    if (data) {
+                        infoContent.innerHTML = `
+                            <div class="info-header">
+                                <div class="info-avatar ${data.avatar}"></div>
+                                <h3 class="info-name">${data.name}</h3>
+                            </div>
+                            <p class="info-description">${data.description}</p>
+                            <button class="info-close" id="closeInfoPanel"><i class="fas fa-times"></i> CLOSE</button>
+                        `;
+                        infoPanel.classList.add('active');
+                        
+                        document.getElementById('closeInfoPanel').addEventListener('click', function() {
+                            infoPanel.classList.remove('active');
+                        });
                     }
                 });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) rotateX(0) scale(1)';
-                });
             });
-        });
 
-        // Initialize typing animation
-        setTimeout(() => {
-            const typingElement = document.querySelector('.typing-animation');
-            if (typingElement) {
-                typingElement.style.animation = 'none';
-                setTimeout(() => {
-                    typingElement.style.animation = 'typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite';
-                }, 100);
-            }
-        }, 1000);
+            // King button
+            document.getElementById('kingBtn').addEventListener('click', function() {
+                document.getElementById('kingOverlay').classList.add('active');
+                
+                // Create confetti effect
+                for (let i = 0; i < 30; i++) {
+                    setTimeout(() => {
+                        const conf = document.createElement('div');
+                        conf.innerHTML = '👑';
+                        conf.style.position = 'fixed';
+                        conf.style.left = Math.random() * 100 + '%';
+                        conf.style.top = '-10%';
+                        conf.style.fontSize = (Math.random() * 2 + 1) + 'rem';
+                        conf.style.zIndex = 10000;
+                        conf.style.pointerEvents = 'none';
+                        conf.style.animation = `floatDown ${Math.random() * 2 + 1}s linear forwards`;
+                        document.body.appendChild(conf);
+                        
+                        setTimeout(() => conf.remove(), 3000);
+                    }, i * 100);
+                }
+            });
+
+            // Close king overlay
+            document.getElementById('closeKing').addEventListener('click', function() {
+                document.getElementById('kingOverlay').classList.remove('active');
+            });
+
+            // Add keyframe animation for confetti
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes floatDown {
+                    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+                    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        })();
     </script>
 </body>
-    </html>
+                                                                                   </html>
